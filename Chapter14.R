@@ -2,6 +2,7 @@
 
 # Packages ----------------------------------------------------------------
 library(tidyverse)
+library(stringr)
 
 
 # 14.2 --------------------------------------------------------------------
@@ -339,5 +340,41 @@ has_contraction <- sentences %>%
   str_subset(contractions) %>% 
   str_extract(contractions) %>% 
   str_split("'")
+
+
+# 14.4.4.1 ----------------------------------------------------------------
+# 1
+string_slash <- "In Windows the directories are seperated by /"
+str_replace(string_slash, "/", "\\\\")
+
+# 2
+string_upper <- "Hallo, met nAam is SEBASTIAAN"
+lower <- c(
+  "H" = "h",
+  "S" = "s", 
+  "E" = "e", 
+  "B" = "b", 
+  "A" = "a", 
+  "T" = "t", 
+  "I" = "i", 
+  "N" = "n"
+  )
+str_replace_all(string_upper, pattern = lower)
+
+# 3
+switch <- str_replace_all(words, "^([A-Za-z])(.*)([A-Za-z])$", "\\3\\2\\1")
+
+
+# 14.4.5.1 ----------------------------------------------------------------
+# 1
+string_1 <- "apples, pears, and bananas"
+str_split(string_1, ", ")
+
+# 2
+# There can be some extra spaces, and some words contains spaces.
+
+# 3
+str_split(words, "")
+# This splits on al the letters.
 
 #TODO: 14.5
