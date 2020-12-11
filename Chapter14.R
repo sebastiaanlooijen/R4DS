@@ -3,6 +3,7 @@
 # Packages ----------------------------------------------------------------
 library(tidyverse)
 library(stringr)
+library(stringi)
 
 
 # 14.2 --------------------------------------------------------------------
@@ -377,4 +378,24 @@ str_split(string_1, ", ")
 str_split(words, "")
 # This splits on al the letters.
 
-#TODO: 14.5
+
+# 14.5.1 ------------------------------------------------------------------
+# 1
+str_subset(c("a\\b", "ab"), "\\\\")
+str_subset(c("a\\b", "ab"), fixed("\\"))
+
+# 2
+tibble(word = unlist(str_extract_all(sentences, boundary("word")))) %>%
+  mutate(word = str_to_lower(word)) %>%
+  count(word, sort = TRUE) %>%
+  head(5)
+
+
+# 14.7.1 ------------------------------------------------------------------
+# 1
+# stri_count_words()
+# stri_duplicated()
+# stri_rand_strings()
+
+# 2
+# You can set the locale in str_sort(..., locale = ...)
