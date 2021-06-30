@@ -2,6 +2,8 @@
 
 # Packages ----------------------------------------------------------------
 library(tidyverse)
+library(stringr)
+library(stringi)
 
 
 # 14.2 --------------------------------------------------------------------
@@ -340,4 +342,60 @@ has_contraction <- sentences %>%
   str_extract(contractions) %>% 
   str_split("'")
 
-#TODO: 14.5
+
+# 14.4.4.1 ----------------------------------------------------------------
+# 1
+string_slash <- "In Windows the directories are seperated by /"
+str_replace(string_slash, "/", "\\\\")
+
+# 2
+string_upper <- "Hallo, met nAam is SEBASTIAAN"
+lower <- c(
+  "H" = "h",
+  "S" = "s", 
+  "E" = "e", 
+  "B" = "b", 
+  "A" = "a", 
+  "T" = "t", 
+  "I" = "i", 
+  "N" = "n"
+  )
+str_replace_all(string_upper, pattern = lower)
+
+# 3
+switch <- str_replace_all(words, "^([A-Za-z])(.*)([A-Za-z])$", "\\3\\2\\1")
+
+
+# 14.4.5.1 ----------------------------------------------------------------
+# 1
+string_1 <- "apples, pears, and bananas"
+str_split(string_1, ", ")
+
+# 2
+# There can be some extra spaces, and some words contains spaces.
+
+# 3
+str_split(words, "")
+# This splits on al the letters.
+
+
+# 14.5.1 ------------------------------------------------------------------
+# 1
+str_subset(c("a\\b", "ab"), "\\\\")
+str_subset(c("a\\b", "ab"), fixed("\\"))
+
+# 2
+tibble(word = unlist(str_extract_all(sentences, boundary("word")))) %>%
+  mutate(word = str_to_lower(word)) %>%
+  count(word, sort = TRUE) %>%
+  head(5)
+
+
+# 14.7.1 ------------------------------------------------------------------
+# 1
+# stri_count_words()
+# stri_duplicated()
+# stri_rand_strings()
+
+# 2
+# You can set the locale in str_sort(..., locale = ...)
